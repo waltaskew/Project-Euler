@@ -5,8 +5,8 @@ module Prime
     , factorCount
     ) where
 
-import qualified List
-import qualified Maybe
+import Data.List (find, genericLength, group)
+import Data.Maybe (isNothing, fromJust)
 
 divisibleBy :: Integer -> Integer -> Bool
 divisibleBy x y = mod x y == 0
@@ -37,17 +37,17 @@ primeFactorization :: Integer -> [Integer]
 primeFactorization n = collectPrimeFactors n []
     where      
       collectPrimeFactors n factors =
-          if Maybe.isNothing maybeFactor
+          if isNothing maybeFactor
           then n : factors
           else collectPrimeFactors (div n primeFactor) (primeFactor : factors)
           where
-            smallestPrimeFactor n = List.find
+            smallestPrimeFactor n = find
                                     (divisibleBy n)
                                     (takeWhile (<= largestPossibleFactor n) primes)
             maybeFactor = smallestPrimeFactor n
-            primeFactor = Maybe.fromJust maybeFactor
+            primeFactor = fromJust maybeFactor
 
 factorCount :: Integer -> Integer                          
 factorCount n = foldl1
                 (*)
-                [List.genericLength ns + 1 | ns <- List.group (primeFactorization n)]
+                [genericLength ns + 1 | ns <- group (primeFactorization n)]
