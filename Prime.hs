@@ -12,7 +12,7 @@ divisibleBy :: Integer -> Integer -> Bool
 divisibleBy x y = mod x y == 0
 
 largestPossibleFactor :: Integer -> Integer
-largestPossibleFactor x = floor . sqrt . fromIntegral $ x
+largestPossibleFactor = floor . sqrt . fromIntegral
 
 isPrime :: Integer -> Bool                          
 isPrime x
