@@ -5,7 +5,7 @@ module Prime
     , factorCount
     ) where
 
-import Data.List (find, genericLength, group)
+import Data.List (find, genericLength, group, foldl')
 import Data.Maybe (isNothing, fromJust)
 
 divisibleBy :: Integer -> Integer -> Bool
@@ -31,7 +31,7 @@ isPrime x
 primes :: [Integer]                             
 primes = sieve [2..]
     where
-      sieve (p:xs) = p : sieve[x|x <- xs, mod x p > 0]
+      sieve (p:xs) = p : sieve [x|x <- xs, mod x p > 0]
 
 primeFactorization :: Integer -> [Integer]                     
 primeFactorization n = collectPrimeFactors n []
@@ -48,6 +48,5 @@ primeFactorization n = collectPrimeFactors n []
             primeFactor = fromJust maybeFactor
 
 factorCount :: Integer -> Integer                          
-factorCount n = foldl1
-                (*)
+factorCount n = foldl' (*) 1
                 [genericLength ns + 1 | ns <- group (primeFactorization n)]
