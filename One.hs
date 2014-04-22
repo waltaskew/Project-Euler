@@ -1,10 +1,10 @@
 limit = 1000
 
-sum_of_n_succ_integers n = (n * (n + 1)) `div` 2
+sumOfNSuccIntegers n = (n * (n + 1)) `div` 2
 
-sum_divisible_by n = (n *) $ sum_of_n_succ_integers $ limit `div` n
+sumDivisibleBy n = (n *) $ sumOfNSuccIntegers $ limit `div` n
 
-answer = sum_divisible_by 3 + sum_divisible_by 5 - sum_divisible_by 15
+answer = sumDivisibleBy 3 + sumDivisibleBy 5 - sumDivisibleBy 15
 
 main = do
   print answer
