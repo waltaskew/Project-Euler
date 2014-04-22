@@ -1,6 +1,7 @@
 import Data.List (foldl', maximumBy)
 import Data.Function (on)
-import qualified Data.Map as Map
+import qualified Data.Map.Strict as Map
+
 
 collatz :: Int -> Map.Map Int [Int] -> ([Int], Map.Map Int [Int])
 {-Produce the Collatz sequence starting with the given number, using
