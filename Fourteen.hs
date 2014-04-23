@@ -1,5 +1,6 @@
-import Data.List (foldl', maximumBy)
+import Control.Exception.Base (assert)
 import Data.Function (on)
+import Data.List (foldl', maximumBy)
 import qualified Data.Map.Strict as Map
 
 
@@ -30,10 +31,19 @@ getCollatzs xs = doGetCollatzs xs Map.empty
       where
         (series, newMap) = collatz x collatzMap
 
-answer = fst $ maximumBy (compare `on` collatzLength)  $ zip numbers collatzSequences
+longestCollatz :: [Int] -> Int
+{-Return the number with the longest Collatz sequence in the
+list of given numbers-}
+longestCollatz numbers = fst $
+                         maximumBy (compare `on` collatzLength) $
+                         zip numbers collatzSequences
   where
     collatzLength = length . snd
-    numbers = [1..999999]
     collatzSequences = getCollatzs numbers
 
-main = do print answer
+answer = longestCollatz [1..999999]
+
+main = do
+  assert (getCollatzs [13, 2] == [[13,40,20,10,5,16,8,4,2,1], [2,1]]) (return ())
+  assert (longestCollatz [2, 13, 1] == 13) (return ())
+  print answer
